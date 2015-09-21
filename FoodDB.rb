@@ -11,8 +11,8 @@ class FoodDB
   end
 
   # Gets a BasicFood object from the database from a food name
-  def getFood(food)
-    return @database[food.name]
+  def getFood(name)
+    return @database[name]
   end
 
   def printAll()

@@ -1,0 +1,16 @@
+Mozzarella Cheese,b,85
+Bread,b,24
+Turkey Lunch Meat,b,60
+Provolone Cheese,b,98
+Tomato Sauce,b,81
+Pizza Dough,b,84
+Peanut Butter,b,166
+Strawberry Jelly,b,71
+Chicken Breast,b,142
+Mashed Potatoes,b,237
+Green Beans,b,44
+Broccoli,b,55
+Penne Pasta,b,101
+Alfredo Sauce,b,38
+Filet Mignon,b,202
+Asparagus,b,40

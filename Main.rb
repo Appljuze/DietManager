@@ -1,18 +1,16 @@
 require_relative 'FoodDB.rb'
 require_relative 'BasicFood.rb'
 
-class Main
-
   # Trims 'amount' of characters from the beginning of the string
-  def trimFromBeginning(string, amount)
-    string[0..(amount - 1)]=''
-    return string
+def trimFromBeginning(string, amount)
+  string[0..(amount - 1)]=''
+  return string
   end
 
   #Initialize the Food Database
   foodDatabase = FoodDB.new()
 
-  File.open('FoodDB.csv', 'r').each() do |line|
+  File.open('FoodDB.txt', 'r').each() do |line|
     foodData = line.split(',')
     # FoodData[0] is the Food Name
     # FoodData[1] is 'b' for BasicFood, 'r' for Recipe
@@ -38,7 +36,8 @@ class Main
         foodDatabase.find(prefix.capitalize!)
       when input.start_with?('print ')
         name = trimFromBeginning(input, 6)
-        foodDatabase.find(name.capitalize!)
+        food = foodDatabase.getFood(name.capitalize!)
+
         #TODO add ability to print recipes
       when input == 'commands'
         # TODO handle "commands"
@@ -48,5 +47,3 @@ class Main
       else puts 'Invalid command. Type "commands" for a list of commands'
     end
   end
-
-end
