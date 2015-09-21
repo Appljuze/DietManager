@@ -18,7 +18,15 @@ class FoodDB
   def printAll()
     puts "Current foods in the database:\n"
     @database.each_value do |food|
-      puts "- #{food.name} : #{food.calories} calories"
+      food.print
+    end
+  end
+
+  def find(prefix)
+    @database.each_value do |food|
+      if food.name.start_with?(prefix)
+        food.print
+      end
     end
   end
 

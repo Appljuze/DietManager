@@ -3,6 +3,12 @@ require_relative 'BasicFood.rb'
 
 class Main
 
+  # Trims 'amount' of characters from the beginning of the string
+  def trimFromBeginning(string, amount)
+    string[0..(amount - 1)]=''
+    return string
+  end
+
   #Initialize the Food Database
   foodDatabase = FoodDB.new()
 
@@ -21,15 +27,26 @@ class Main
     end
   end
 
-  input = gets().chomp()
-  case input
-    when 'print all'
-      foodDatabase.printAll()
-    when 'quit'
-      puts 'Quitting... thanks for playing!'
-      exit
-    when 'commands'
-      # TODO handle "commands"
-    else puts 'Invalid command. Type "commands" for a list of commands'
+  while(true)
+    input = gets().chomp()
+    case
+      when input == 'print all'
+        foodDatabase.printAll()
+      when input.start_with?('find ')
+        prefix = trimFromBeginning(input, 5)
+        # Capitalize is called to account for lowercase input
+        foodDatabase.find(prefix.capitalize!)
+      when input.start_with?('print ')
+        name = trimFromBeginning(input, 6)
+        foodDatabase.find(name.capitalize!)
+        #TODO add ability to print recipes
+      when input == 'commands'
+        # TODO handle "commands"
+      when input == 'quit'
+        puts 'Quitting... thanks for playing!'
+        exit
+      else puts 'Invalid command. Type "commands" for a list of commands'
+    end
   end
+
 end
