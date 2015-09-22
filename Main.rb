@@ -159,7 +159,7 @@ require_relative 'Recipe.rb'
         puts 'Saved successfully'
       ################# commands #################
       when input == 'commands'
-        # TODO print out commands
+        # TODO print commands
       ################# quit #################
       when input == 'quit'
         saveToFile(foodDatabase,recipeDatabase)
