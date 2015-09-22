@@ -6,17 +6,27 @@ class FoodDB
   end
 
   # Add BasicFood object to database
-  def addFood(food)
+  def add(food)
     @database[food.name] = food
   end
 
   # Gets a BasicFood object from the database from a food name
-  def getFood(name)
-    return @database[name]
+  def get(name)
+    @database[name]
   end
 
-  def printAll()
-    puts "Current foods in the database:\n"
+  # Returns true if the food exists in the database
+  def contains?(food)
+    @database.has_key?(food)
+  end
+
+  # Returns true if the database is not empty. Redundant, but useful for readability
+  def notEmpty?
+    !@database.empty?
+  end
+
+  def printAll(recipeOrFood)
+      puts "Current #{recipeOrFood} in the database:\n"
     @database.each_value do |food|
       food.print
     end
@@ -29,5 +39,7 @@ class FoodDB
       end
     end
   end
+
+  attr_reader :database
 
 end

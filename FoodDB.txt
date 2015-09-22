@@ -14,3 +14,5 @@ Penne Pasta,b,101
 Alfredo Sauce,b,38
 Filet Mignon,b,202
 Asparagus,b,40
+Bacon,b,100
+Pizza,r,Pizza Dough,Tomato Sauce,Bacon
