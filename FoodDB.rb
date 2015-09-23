@@ -38,18 +38,19 @@ class FoodDB
     !@database.empty?
   end
 
-  def printAll(recipeOrFood)
-      puts "Current #{recipeOrFood} in the database:\n"
-    @database.each_value do |food|
-      food.print
-    end
-  end
-
+  # Finds all foods that start with 'prefix'
   def find(prefix)
     @database.each_value do |food|
       if food.name.start_with?(prefix)
         food.print
       end
+    end
+  end
+
+  def printAll(recipeOrFood)
+    puts "Current #{recipeOrFood} in the database:\n"
+    @database.each_value do |food|
+      food.print
     end
   end
 

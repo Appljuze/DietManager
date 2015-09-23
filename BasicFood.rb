@@ -26,6 +26,7 @@ class BasicFood
     puts "   | #{name} : #{calories} calories"
   end
 
+  # Writes the object to FoodDB.txt. Does NOT close the file
   def writeToFile(file)
     file.write("#{name},b,#{calories}\n")
   end

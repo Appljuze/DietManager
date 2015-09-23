@@ -28,6 +28,7 @@ require_relative 'Recipe.rb'
     return string.gsub(/\w+/, &:capitalize)
   end
 
+  # Returns true if the string contains characters
   def stringNotEmpty(string)
     return string != ''
   end

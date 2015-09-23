@@ -33,6 +33,7 @@ class Recipe
     end
   end
 
+  # Writes this recipe to FoodDB.txt. Does NOT close the file
   def writeToFile(file)
     file.write("#{name},r")
     foods.each do |food|
