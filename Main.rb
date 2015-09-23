@@ -1,3 +1,14 @@
+=begin
+
+  Kyler Brown
+  Ruby Diet Manager Project
+  SWEN 250 Section 01
+  Project Created on 9/18/2015
+
+  - This is the main driver class for the Diet Manager
+
+=end
+
 require_relative 'FoodDB.rb'
 require_relative 'BasicFood.rb'
 require_relative 'Recipe.rb'
@@ -157,9 +168,11 @@ require_relative 'Recipe.rb'
       when input == 'save'
         saveToFile(foodDatabase,recipeDatabase)
         puts 'Saved successfully'
+
       ################# commands #################
       when input == 'commands'
         # TODO print commands
+
       ################# quit #################
       when input == 'quit'
         saveToFile(foodDatabase,recipeDatabase)

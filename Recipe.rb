@@ -1,3 +1,16 @@
+=begin
+
+  Kyler Brown
+  Ruby Diet Manager Project
+  SWEN 250 Section 01
+  Project Created on 9/18/2015
+
+  - This class is used to create Recipe objects
+  - Each Recipe has its own name, and an array of
+    foods that belong to that recipe
+
+=end
+
 require_relative 'BasicFood.rb'
 
 class Recipe
@@ -6,6 +19,8 @@ class Recipe
     @name = name
     @foods = foods
     @calories = 0
+
+    # Totals up all the calories from the foods array
     foods.each do |food|
       @calories += food.calories
     end

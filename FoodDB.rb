@@ -1,3 +1,16 @@
+=begin
+
+  Kyler Brown
+  Ruby Diet Manager Project
+  SWEN 250 Section 01
+  Project Created on 9/18/2015
+
+  - This is a helper class used for storing the food.
+  - This class is based around a hash, with the name
+  of the food as the key and the value as a BasicFood object
+
+=end
+
 class FoodDB
 
   # Initialize the database hash

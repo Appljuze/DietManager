@@ -1,3 +1,15 @@
+=begin
+
+  Kyler Brown
+  Ruby Diet Manager Project
+  SWEN 250 Section 01
+  Project Created on 9/18/2015
+
+  - This class is used to create objects out of each
+    food, each with its own name and calorie count
+
+=end
+
 class BasicFood
 
   def initialize(name, calories)
