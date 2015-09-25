@@ -91,7 +91,6 @@ require_relative 'Recipe.rb'
       ################# find {prefix} #################
       when input.start_with?('find')
         prefix = trimFromBeginning(input, 5)
-        puts stringNotEmpty(prefix)
         if stringNotEmpty(prefix)
           foodDatabase.find(capAll(prefix))
         else puts "Incorrect format. Try 'find {prefix}'"
