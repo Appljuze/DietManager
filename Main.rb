@@ -19,7 +19,7 @@ require_relative 'Recipe.rb'
 
   # Trims 'amount' of characters from the beginning of the string
   def trimFromBeginning(string, amount)
-    string[0..(amount - 1)]=''
+    string[0..(amount - 1)] = ''
     return string
   end
 
