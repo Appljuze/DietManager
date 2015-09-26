@@ -17,6 +17,10 @@ class BasicFood
     @calories = calories.to_i
   end
 
+  def to_s
+    @name
+  end
+
   def print
     puts "- #{name} : #{calories} calories"
   end
@@ -31,5 +35,5 @@ class BasicFood
     file.write("#{name},b,#{calories}\n")
   end
 
-  attr_accessor :name, :calories
+  attr_reader :name, :calories
 end

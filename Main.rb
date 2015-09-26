@@ -12,10 +12,13 @@
 require_relative 'FoodDB.rb'
 require_relative 'BasicFood.rb'
 require_relative 'Recipe.rb'
+require_relative 'Log.rb'
+require_relative 'MyDate.rb'
 
   #Initialize the Food Database and Recipe Database. They both utilize the same class
   foodDatabase = FoodDB.new
   recipeDatabase = FoodDB.new
+  foodLog = Log.new
 
   # Trims 'amount' of characters from the beginning of the string
   def trimFromBeginning(string, amount)
@@ -31,6 +34,13 @@ require_relative 'Recipe.rb'
   # Returns true if the string contains characters
   def stringNotEmpty(string)
     return string != ''
+  end
+
+  # Returns a Date object with the current date
+  def getCurrentDate
+    time = Time.now
+    currentDate = MyDate.new(time.month, time.day, time.year)
+    return currentDate
   end
 
   def saveToFile(foodDatabase, recipeDatabase)
@@ -168,7 +178,17 @@ require_relative 'Recipe.rb'
       ################# log {food_name} #################
       when input.start_with?('log')
         foodName = trimFromBeginning(input,4)
-        file = File.open("DietLog.txt")
+        foodName = capAll(foodName)
+        if foodDatabase.contains?(foodName)
+          date = getCurrentDate
+          foodLog.add(date.to_s, foodName)
+          puts "Added #{foodName} to today's log"
+        else puts "'#{foodName}' was not found. Try creating it first with 'new food {name},{calories}'"
+        end
+
+      ################# show #################
+      when input == 'show'
+        foodLog.printLogForToday
 
       ################# save #################
       when input == 'save'
