@@ -133,28 +133,29 @@ require_relative 'Recipe.rb'
 
       ################# new recipe {name},{food_1},{food_2}... #################
       when input.start_with?('new recipe')
-        input = trimFromBeginning(input, 11)
-        if stringNotEmpty(input)
-          foodData = input.split(',')
-          recipeName = capAll(foodData[0])
+        recipeData = trimFromBeginning(input, 11).split(',')
+
+        if recipeData.length >= 2
+          recipeName = capAll(recipeData[0])
 
           # If the recipe doesn't exist, proceed
           if !recipeDatabase.contains?(recipeName)
 
-            # Removes first element from array (the food name)
-            foodData.shift
+            # Removes first element from array (the recipe name)
+            recipeData.shift
 
             # Array of food objects. Will be used to pass into the new recipe constructor if all foods exist
             foodObjects = Array.new
-            foodData.each do |foodIterator|
+            recipeData.each do |foodIterator|
               food = capAll(foodIterator)
               if foodDatabase.contains?(food)
                 foodObjects.push(foodDatabase.get(food))
               else puts "'#{food}' was not found. Try creating it first with 'new food {name},{calories}'"
               end
             end
+
             # If all of the food names passed in were valid foods, then create the recipe
-            if foodData.length == foodObjects.length
+            if recipeData.length == foodObjects.length
               recipeDatabase.add(Recipe.new(recipeName, foodObjects))
               puts "Added recipe #{recipeName} to database"
             end
@@ -163,6 +164,11 @@ require_relative 'Recipe.rb'
           end
         else puts "Incorrect format. Try 'new recipe {name} {food_1} {food_2} ...'"
         end
+
+      ################# log {food_name} #################
+      when input.start_with?('log')
+        foodName = trimFromBeginning(input,4)
+        file = File.open("DietLog.txt")
 
       ################# save #################
       when input == 'save'
