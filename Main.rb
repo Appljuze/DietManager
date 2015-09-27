@@ -190,6 +190,15 @@ require_relative 'MyDate.rb'
       when input == 'show'
         foodLog.printLogForToday
 
+      ################# show all #################
+      when input == 'show all'
+        foodLog.printAllLogs
+
+      ################# show {date} #################
+      when input.start_with?('show')
+        date = trimFromBeginning(input,5)
+        foodLog.printLogForDate(date)
+
       ################# save #################
       when input == 'save'
         saveToFile(foodDatabase,recipeDatabase)

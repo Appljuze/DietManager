@@ -40,6 +40,27 @@ class Log
     end
   end
 
+  def printLogForDate(date)
+    if @database[date] == nil
+      puts 'No foods have been added for that date'
+      return
+    end
+    logItem = @database[date]
+    puts "Foods from #{date}:"
+    logItem.foods.each do |food|
+      puts "  - #{food}"
+    end
+  end
+
+  def printAllLogs
+    @database.each do |date,logItem|
+      puts "Foods from #{date}:"
+      logItem.foods.each do |foodName|
+        puts "  - #{foodName}"
+      end
+    end
+  end
+
   # Returns true if the logItem exists in the database
   def contains?(logItem)
     @database.has_key?(logItem)
