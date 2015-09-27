@@ -15,6 +15,8 @@ require_relative 'BasicFood.rb'
 
 class Recipe
 
+  # Initialize the Recipe with the given name and foods
+  # Calories defaults to zero
   def initialize(name, foods)
     @name = name
     @foods = foods
@@ -26,6 +28,9 @@ class Recipe
     end
   end
 
+  # Print the recipe to console. Simply prints the Recipe
+  # header, then uses the method 'recipePrint' from the
+  # BasicFood class to actually do the food printing
   def print
     puts "- #{name} : #{calories} calories"
     @foods.each do |food|

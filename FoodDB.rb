@@ -33,6 +33,11 @@ class FoodDB
     @database.has_key?(food)
   end
 
+  # Returns true if the food doesn't exist in the database
+  def does_not_contain?(food)
+    !@database.has_key?(food)
+  end
+
   # Returns true if the database is not empty. Redundant, but useful for readability
   def notEmpty?
     !@database.empty?

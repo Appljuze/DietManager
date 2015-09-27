@@ -15,18 +15,37 @@ require 'time'
 
 class LogItem
 
+  # Initialize a LogItem with the given date and initial food
   def initialize(date, foodName)
     @date = date
-    @foods = [foodName]
+    @foods = [foodName.chomp]
   end
 
+  # Adds the specified food to the 'foods' array
   def addFood(food)
-    foods.push(food)
+    foods.push(food.chomp)
   end
 
-  def print
-    dateString = date.print
-    puts dateString.append(foods)
+  def removeFood(food)
+    foods.delete(food)
+  end
+
+  def numberOfFoods
+    @foods.length
+  end
+
+  # Returns whether or not the foods array contains the specified food
+  def hasFood?(food)
+    @foods.include?(food)
+  end
+
+  # Writes this LogItem to the specified file. Does NOT close the file
+  def writeToFile(file)
+    file.write("#{date}")
+    foods.each do |food|
+      file.write(",#{food}")
+    end
+    file.write("\n")
   end
 
   attr_reader :foods, :date

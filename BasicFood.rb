@@ -14,13 +14,17 @@ class BasicFood
 
   def initialize(name, calories)
     @name = name
+    # Convert calories to an integer, since it comes in as a String
     @calories = calories.to_i
   end
 
+  # Overrides the to_s method to just print out the
+  # food's name instead of the BasicFood object
   def to_s
     @name
   end
 
+  # Prints the food to the console, with formatting.
   def print
     puts "- #{name} : #{calories} calories"
   end

@@ -29,10 +29,29 @@ class Log
     end
   end
 
+  def delete(date, foodName)
+    if @database.has_key?(date)
+      if @database[date].hasFood?(foodName)
+        @database[date].removeFood(foodName)
+        puts "Deleted #{foodName} from the food log for the date '#{date}'"
+      else puts "'#{foodName}' has not been added for the date '#{date}'"
+      end
+    else puts 'That date does not exist in the food log'
+    end
+    # If the number of foods for that date has dropped to zero, delete the key
+    if @database[date].numberOfFoods == 0
+      @database.delete(date)
+    end
+  end
+
+  # Prints the food log for today's date
   def printLogForToday
     puts 'Foods for today:'
-    foodsForToday = @database[MyDate.today].foods
-    if foodsForToday != nil
+    # Use the MyDate class to access today's date
+    logForToday = @database[MyDate.today]
+
+    if logForToday != nil
+      foodsForToday = logForToday.foods
       foodsForToday.each do |foodName|
       puts "  - #{foodName}"
       end
@@ -40,6 +59,7 @@ class Log
     end
   end
 
+  # Prints the food log for the specified date
   def printLogForDate(date)
     if @database[date] == nil
       puts 'No foods have been added for that date'
@@ -52,7 +72,12 @@ class Log
     end
   end
 
+  # Prints all food logs that currently exist
   def printAllLogs
+    if @database.empty?
+      puts 'No foods have been added to the food log'
+      return
+    end
     @database.each do |date,logItem|
       puts "Foods from #{date}:"
       logItem.foods.each do |foodName|

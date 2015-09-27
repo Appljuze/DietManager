@@ -15,9 +15,11 @@ require_relative 'Recipe.rb'
 require_relative 'Log.rb'
 require_relative 'MyDate.rb'
 
-  #Initialize the Food Database and Recipe Database. They both utilize the same class
+  # Initialize the Food Database and Recipe Database. They both utilize the same class
   foodDatabase = FoodDB.new
   recipeDatabase = FoodDB.new
+
+  # Initialize the Log database
   foodLog = Log.new
 
   # Trims 'amount' of characters from the beginning of the string
@@ -43,15 +45,45 @@ require_relative 'MyDate.rb'
     return currentDate
   end
 
-  def saveToFile(foodDatabase, recipeDatabase)
-    file = File.open('FoodDB.txt', 'w')
+  # Saves all three databases to their respective files.
+  # Overwrites whatever is currently in the file with the
+  # values that are currently in each database
+  def saveToFile(foodDatabase, recipeDatabase, logDatabase)
+    foodDBfile = File.open('FoodDB.txt', 'w')
+    logDBfile = File.open('DietLog.txt', 'w')
+
     foodDatabase.database.each_value do |food|
-      food.writeToFile(file)
+      food.writeToFile(foodDBfile)
     end
     recipeDatabase.database.each_value do |recipe|
-      recipe.writeToFile(file)
+      recipe.writeToFile(foodDBfile)
     end
-    file.close
+    logDatabase.database.each_value do |logItem|
+      logItem.writeToFile(logDBfile)
+    end
+
+    # Close each database file to save the written values
+    foodDBfile.close
+    logDBfile.close
+  end
+
+  File.open('DietLog.txt', 'r').each do |line|
+    logData = line.split(',')
+    # LogData[0] is the date
+    # LogData[1..end] is the food(s)
+    date = logData[0]
+    if logData.length > 2
+      # Delete the first two elements of the array
+      # Since deleting at 0 would make the second element
+      # the new 0, just delete at 0 twice.
+      2.times {logData.delete_at(0)}
+
+      logData.each do |foodName|
+        foodLog.add(date,foodName)
+      end
+    else
+      foodLog.add(date, logData[1])
+    end
   end
 
   File.open('FoodDB.txt', 'r').each do |line|
@@ -82,6 +114,8 @@ require_relative 'MyDate.rb'
     end
   end
 
+  # Use while loop so the program will keep asking
+  # for input until the user types 'quit'
   while true
     input = gets.chomp
     case
@@ -177,14 +211,36 @@ require_relative 'MyDate.rb'
 
       ################# log {food_name} #################
       when input.start_with?('log')
-        foodName = trimFromBeginning(input,4)
-        foodName = capAll(foodName)
-        if foodDatabase.contains?(foodName)
-          date = getCurrentDate
-          foodLog.add(date.to_s, foodName)
-          puts "Added #{foodName} to today's log"
-        else puts "'#{foodName}' was not found. Try creating it first with 'new food {name},{calories}'"
+        logData = trimFromBeginning(input,4)
+        logData = capAll(logData)
+        logDataArray = logData.split(',')
+        foodName = logDataArray[0]
+
+        if foodDatabase.does_not_contain?(foodName)
+          puts "'#{foodName}' was not found. Try creating it first with 'new food {name},{calories}'"
+          next
         end
+        # If the user typed in a date
+        if logDataArray.length > 1
+          date = logDataArray[1]
+          foodLog.add(date, foodName)
+          puts "Added #{foodName} to the log for #{date}"
+          next
+        end
+
+        # If the user only typed in a food, use current date
+        foodLog.add(getCurrentDate.to_s, foodName)
+        puts "Added #{foodName} to today's log"
+
+      ################# delete #################
+      when input.start_with?('delete')
+        input = trimFromBeginning(input,7)
+        input = capAll(input)
+        data = input.split(',')
+
+        # Data[0] is the food name
+        # Data[1] is the date
+        foodLog.delete(data[1], data[0])
 
       ################# show #################
       when input == 'show'
@@ -201,7 +257,7 @@ require_relative 'MyDate.rb'
 
       ################# save #################
       when input == 'save'
-        saveToFile(foodDatabase,recipeDatabase)
+        saveToFile(foodDatabase,recipeDatabase,foodLog)
         puts 'Saved successfully'
 
       ################# commands #################
@@ -210,7 +266,7 @@ require_relative 'MyDate.rb'
 
       ################# quit #################
       when input == 'quit'
-        saveToFile(foodDatabase,recipeDatabase)
+        saveToFile(foodDatabase,recipeDatabase,foodLog)
         puts 'Saving and quitting...thanks for playing!'
         exit
       else puts 'Invalid command. Type "commands" for a list of commands'

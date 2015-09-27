@@ -10,6 +10,8 @@
 
 =end
 
+require 'time'
+
 class MyDate
 
   def initialize(month, day, year)
