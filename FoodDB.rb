@@ -23,7 +23,7 @@ class FoodDB
     @database[food.name] = food
   end
 
-  # Gets a BasicFood object from the database from a food name
+  # Gets a BasicFood object from the database from the specified food name
   def get(name)
     @database[name]
   end
@@ -52,6 +52,9 @@ class FoodDB
     end
   end
 
+  # Prints all foods currently in the database.
+  # Specify either 'recipe' or 'food' when calling the method
+  # This is so we don't need two separate methods for this same function.
   def printAll(recipeOrFood)
     puts "Current #{recipeOrFood} in the database:\n"
     @database.each_value do |food|

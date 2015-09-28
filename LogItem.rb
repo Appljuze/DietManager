@@ -26,10 +26,12 @@ class LogItem
     foods.push(food.chomp)
   end
 
+  # Removes the specified food from the 'foods' array
   def removeFood(food)
     foods.delete(food)
   end
 
+  # Returns the number of foods for this LogItem
   def numberOfFoods
     @foods.length
   end

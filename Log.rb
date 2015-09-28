@@ -15,6 +15,7 @@ require_relative 'LogItem.rb'
 
 class Log
 
+  # Initialize a Hash, which will represent the food database
   def initialize
     @database = Hash.new
   end
@@ -29,6 +30,7 @@ class Log
     end
   end
 
+  # Deletes the specified food from the database, for the specified date
   def delete(date, foodName)
     if @database.has_key?(date)
       if @database[date].hasFood?(foodName)
@@ -50,6 +52,7 @@ class Log
     # Use the MyDate class to access today's date
     logForToday = @database[MyDate.today]
 
+    # If a log for today is found in the database (!= nil)
     if logForToday != nil
       foodsForToday = logForToday.foods
       foodsForToday.each do |foodName|
@@ -78,6 +81,7 @@ class Log
       puts 'No foods have been added to the food log'
       return
     end
+    # Iterates through each date and LogItem and prints the foods for that date
     @database.each do |date,logItem|
       puts "Foods from #{date}:"
       logItem.foods.each do |foodName|

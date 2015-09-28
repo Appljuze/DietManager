@@ -67,6 +67,8 @@ require_relative 'MyDate.rb'
     logDBfile.close
   end
 
+  # Read the DietLog.txt file and write all the contents to
+  # the logData database
   File.open('DietLog.txt', 'r').each do |line|
     logData = line.split(',')
     # LogData[0] is the date
@@ -86,6 +88,8 @@ require_relative 'MyDate.rb'
     end
   end
 
+  # Read the FoodDB.txt file and write its contents to the
+  # foodData database
   File.open('FoodDB.txt', 'r').each do |line|
     foodData = line.split(',')
     # FoodData[0] is the Food Name
@@ -109,6 +113,8 @@ require_relative 'MyDate.rb'
         end
       end
 
+      # Create a new recipe from the given values and
+      # add it to the recipe database
       recipe = Recipe.new(recipeName, foods)
       recipeDatabase.add(recipe)
     end

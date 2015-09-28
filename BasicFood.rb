@@ -12,6 +12,7 @@
 
 class BasicFood
 
+  # Initialize a BasicFood object with the specified name and number of calories
   def initialize(name, calories)
     @name = name
     # Convert calories to an integer, since it comes in as a String
