@@ -116,7 +116,9 @@ require_relative 'MyDate.rb'
 
   # Use while loop so the program will keep asking
   # for input until the user types 'quit'
+  puts "Type 'commands' for a list of commands."
   while true
+    print 'Enter a command: '
     input = gets.chomp
     case
       ################# print all #################
