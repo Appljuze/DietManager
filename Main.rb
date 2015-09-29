@@ -126,8 +126,12 @@ require_relative 'MyDate.rb'
   while true
     print 'Enter a command: '
     input = gets.chomp
+
+    # Start case statement
     case
+
       ################# print all #################
+      # Simply calls the printAll function from the food database.
       when input == 'print all'
         if foodDatabase.notEmpty?
           foodDatabase.printAll('foods')
@@ -141,6 +145,8 @@ require_relative 'MyDate.rb'
         end
 
       ################# find {prefix} #################
+      # Checks to make sure the string isn't empty, then calls the
+      # find method from the food database.
       when input.start_with?('find')
         prefix = trimFromBeginning(input, 5)
         if stringNotEmpty(prefix)
@@ -149,6 +155,8 @@ require_relative 'MyDate.rb'
         end
 
       ################# print {name} #################
+      # Prints the given food or recipe using the print method from
+      # their respective classes. Checks if the food or recipe exists.
       when input.start_with?('print')
         name = trimFromBeginning(input, 6)
         name = capAll(name)
@@ -163,15 +171,16 @@ require_relative 'MyDate.rb'
         else puts "'#{name}' was not found"
         end
 
-
       ################# new food {name},{calories} #################
+      # Creates a new BasicFood object with the given input. Stores the
+      # object in the food database. Checks to make sure the food doesn't
+      # exist and that the arguments are valid.
       when input.start_with?('new food')
         input = trimFromBeginning(input, 9)
         if stringNotEmpty(input)
           foodData = input.split(',')
           foodData[0] = capAll(foodData[0])
 
-          # If the food doesn't exist
           if !foodDatabase.contains?(foodData[0])
             if foodData.length == 2
               foodDatabase.add(BasicFood.new(foodData[0], foodData[1]))
@@ -184,15 +193,15 @@ require_relative 'MyDate.rb'
         end
 
       ################# new recipe {name},{food_1},{food_2}... #################
+      # Creates a new Recipe object with the given input. Stores the
+      # object in the recipe database. Checks to make sure the recipe doesn't
+      # exist and that the arguments are valid.
       when input.start_with?('new recipe')
         recipeData = trimFromBeginning(input, 11).split(',')
 
         if recipeData.length >= 2
           recipeName = capAll(recipeData[0])
-
-          # If the recipe doesn't exist, proceed
           if !recipeDatabase.contains?(recipeName)
-
             # Removes first element from array (the recipe name)
             recipeData.shift
 
@@ -211,13 +220,15 @@ require_relative 'MyDate.rb'
               recipeDatabase.add(Recipe.new(recipeName, foodObjects))
               puts "Added recipe #{recipeName} to database"
             end
-
           else puts 'That recipe already exists!'
           end
         else puts "Incorrect format. Try 'new recipe {name} {food_1} {food_2} ...'"
         end
 
-      ################# log {food_name} #################
+      ################# log {food_name},{date *optional*} #################
+      # Creates a log of the given food in the food log. Creates a LogItem
+      # for the specified date, and creates it for the current date if no
+      # date is specified.
       when input.start_with?('log')
         logData = trimFromBeginning(input,4)
         logData = capAll(logData)
@@ -240,7 +251,8 @@ require_relative 'MyDate.rb'
         foodLog.add(getCurrentDate.to_s, foodName)
         puts "Added #{foodName} to today's log"
 
-      ################# delete #################
+      ################# delete {food_name},{date} #################
+      # Deletes the log of the current food from the specified date.
       when input.start_with?('delete')
         input = trimFromBeginning(input,7)
         input = capAll(input)
@@ -251,28 +263,49 @@ require_relative 'MyDate.rb'
         foodLog.delete(data[1], data[0])
 
       ################# show #################
+      # Show the log for today. Uses the method from the Log class
+      # to handle the entire command.
       when input == 'show'
         foodLog.printLogForToday
 
       ################# show all #################
+      # Show all logs that are currently in the foodLog. Use the
+      # method from the Log class to handle the command.
       when input == 'show all'
         foodLog.printAllLogs
 
       ################# show {date} #################
+      # Show the log for the specified date. Valid format is MM/DD/YYYY.
       when input.start_with?('show')
         date = trimFromBeginning(input,5)
         foodLog.printLogForDate(date)
 
       ################# save #################
+      # Saves the foodDatabase and recipeDatabase to the FoodDB.txt file.
+      # Saves the foodLog to the DietLog.txt
       when input == 'save'
         saveToFile(foodDatabase,recipeDatabase,foodLog)
         puts 'Saved successfully'
 
       ################# commands #################
+      # Prints a helper menu for all the available commands.
       when input == 'commands'
-        # TODO print commands
+        puts "'quit' - Saves the food database and the log and exits the program"
+        puts "'save' - Saves the food database and the log"
+        puts "'new food {name},{calories}' - Creates a new food and stores it in the database"
+        puts "'new recipe {name},{food_1},{food_2},...' - Creates a new recipe with any amount of foods"
+        puts "'print {name}' - Prints the food data for the given food name"
+        puts "'print all' - Prints all foods currently in the database"
+        puts "'find {prefix}' - Finds all foods that start with the given prefix"
+        puts "'log {name}' - Adds the given food to the food log for today"
+        puts "'log {name},{date}' - Adds the given food to the food log for the given date"
+        puts "'delete {name},{date}' - Deletes the given food from the food database for the given date"
+        puts "'show' - Shows the food log for the current date"
+        puts "'show {MM/DD/YYYY}' - Shows the food log for the given date"
+        puts "'show all' - Shows all foods for every date currently in the food log"
 
       ################# quit #################
+      # Calls the save method, then exits the program.
       when input == 'quit'
         saveToFile(foodDatabase,recipeDatabase,foodLog)
         puts 'Saving and quitting...thanks for playing!'

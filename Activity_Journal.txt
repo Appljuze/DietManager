@@ -7,49 +7,89 @@ Name: Kyler Brown
 Level 1 – Food DB Load – Start
 Estimated Time	2H
 Plan for this level:
-
+ - Create the BasicFood class
+ - Create the FoodDB class
+ - Parse the text file from the main driver class
+    - Add all the values from the text files into BasicFood objects
+    - Store the BasicFood objects in a FoodDB object
+ - Use a case statement to handle the text input
+ - Use 'exit' for the quit command
+ - Use an 'each' loop to iterate through the FoodDB and print all the foods, for the 'print all' command
 Level 1 – Food DB Load – Complete
-Actual Time	HH MM
+Actual Time	3H 40M
 Lessons learned, problems encountered, obstacles overcome, etc.
+    I didn't have much trouble with this part. The only thing I had trouble with was
+    learning how to correctly create arrays and hashes.
 
 ================================================================
 Level 2 – Print & Find – Start
-Estimated Time	HH MM
+Estimated Time	1H
 Plan for this level:
-
+    - Create a 'find' method inside the FoodDB class, which will find an array of foods based on a given prefix
+        - Use the .start_with? method for this
+    - Create a 'print' method inside the FoodDB class, which will access the Hash inside the FoodDB and return a
+    BasicFood object for the given food
 Level 2  – Print & Find – Complete
-Actual Time	HH MM
+Actual Time	1H 30M
 Lessons learned, problems encountered, obstacles overcome, etc.
+    The major issue that I had with this part is being able to find the food in the hash, regardless of case.
+    I realized that I would have to create a method to capitalize all the words in the food, to account for
+    foods that have spaces in them. This took a bit to figure out, but I did eventually.
 
 ================================================================
 Level 3 – Database Update – Start
-Estimated Time	HH MM
+Estimated Time	5H
 Plan for this level:
-
+    - The 'new food' command will have to split the input into an array of food values, and simply store them as
+    a new BasicFood object in the FoodDB
+    - The 'new recipe' command will split the input just like 'new food', except it will need to account for an infinite
+    amount of foods. I think I can do this by just removing the name of the recipe from the input, and using the rest of
+    the input as
+    - The 'save' command will iterate through all the current databases and write them to their respective files
+    - The 'quit' command will call the save method and then just exit the program.
 Level 3 – Database Update  – Complete
-Actual Time	HH MM
+Actual Time	6H 30M
 Lessons learned, problems encountered, obstacles overcome, etc.
-
+    I had some trouble with getting the new recipe command to allow an infinite amount of foods. The main issue I had with
+    it was making sure that all the foods that you passed in were all valid foods. I was able to solve this by creating
+    two separate arrays, one with the food names that the user entered, and the other which would contain all the valid
+    BasicFood objects. If these two arrays are equal in length, then the foods they entered are all valid. The reason that this
+    section took much longer than anticipated was because I had to account for all possible errors in user entry.
+    I also realized that I have to close the file that I opened for writing, in order to save the things that I wrote to it.
 ================================================================
 Level 4 – Logging Foods – Start
-Estimated Time	HH MM
+Estimated Time	4H
 Plan for this level:
-
+    - For the 'log' command, I'll have to check for the amount of arguments given, to figure out whether the user entered a
+    date or not, which will determine if I need to use today's date or the date that they gave me.
+    - I'll create the Log class with a hash to store the LogItem objects. The log will be used just like the FoodDB class.
+    - Use the Time class for getting the current date.
+    - Might be easier to create a small Date class, for formatting the date which I get from Time.
+    - The 'show all' command will have its own method within the Log class, which will show all foods for all dates
 Level 4 – Logging Foods – Complete
-Actual Time	HH MM
+Actual Time	2H 15M
 Lessons learned, problems encountered, obstacles overcome, etc.
-
+    This section was pretty straight forward for me. After having done the previous parts of the project, I was able to
+    crank this part out pretty quickly. I assumed that it would take much longer because I thought I would have more trouble
+    with the Date, but then I researched and was able to get that part done quickly.
 ================================================================
 Level 5 – Show & Delete – Start
-Estimated Time	HH MM
+Estimated Time	4H
 Plan for this level:
-
+    - For the 'show' command, I will need to access the Log database hash, and pass in the current date, which is a method that
+    I created in the Date class, called 'today'. This will return the LogItem object with the foods for that date.
+    - The 'show date' command will be very similar to the 'show' method, except instead of using today's date, I'll use the date
+    that they pass into the command.
+    - The 'delete' command will need to check if the date exists first before deleting, and I'll have to use the delete method
+    that belongs to the hash class. This part shouldn't be too difficult.
 Level 5 – Show & Delete – Complete
-Actual Time	HH MM
+Actual Time	3H 30M
 Lessons learned, problems encountered, obstacles overcome, etc.
-
+    I didn't really encounter any problems for this section. I had to learn how to delete a value from a hash, but that was
+    solved with a simple search on the internet. The rest of this section was pretty straight forward.
 ================================================================
 Overall Summary
-Estimated Total Time	HH MM
-Actual Total Time	HH MM
+Estimated Total Time	16H
+Actual Total Time	17H 25M
 Project reflection:
+    This project definitely helped me to learn ruby.

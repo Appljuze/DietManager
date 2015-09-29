@@ -45,6 +45,7 @@ class FoodDB
 
   # Finds all foods that start with 'prefix'
   def find(prefix)
+    puts "Foods matching the prefix '#{prefix}':"
     @database.each_value do |food|
       if food.name.start_with?(prefix)
         food.print

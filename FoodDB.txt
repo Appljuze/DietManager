@@ -16,5 +16,4 @@ Filet Mignon,b,202
 Asparagus,b,40
 Bacon,b,100
 Pizza,r,Pizza Dough,Tomato Sauce,Bacon
-Breakfast Asparagus,r,Filet Mignon,Bacon
 Dinner,r,Pizza Dough,Bread,Turkey Lunch Meat,Broccoli,Green Beans
