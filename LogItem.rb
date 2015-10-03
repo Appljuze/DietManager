@@ -16,33 +16,33 @@ require 'time'
 class LogItem
 
   # Initialize a LogItem with the given date and initial food
-  def initialize(date, foodName)
+  def initialize(date, food_name)
     @date = date
-    @foods = [foodName.chomp]
+    @foods = [food_name.chomp]
   end
 
   # Adds the specified food to the 'foods' array
-  def addFood(food)
+  def add_food(food)
     foods.push(food.chomp)
   end
 
   # Removes the specified food from the 'foods' array
-  def removeFood(food)
+  def remove_food(food)
     foods.delete(food)
   end
 
   # Returns the number of foods for this LogItem
-  def numberOfFoods
+  def number_of_foods
     @foods.length
   end
 
   # Returns whether or not the foods array contains the specified food
-  def hasFood?(food)
+  def has_food?(food)
     @foods.include?(food)
   end
 
   # Writes this LogItem to the specified file. Does NOT close the file
-  def writeToFile(file)
+  def write_to_file(file)
     file.write("#{date}")
     foods.each do |food|
       file.write(",#{food}")

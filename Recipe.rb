@@ -34,7 +34,7 @@ class Recipe
   def print
     puts "- #{name} : #{calories} calories"
     @foods.each do |food|
-      food.recipePrint
+      food.recipe_print
     end
   end
 

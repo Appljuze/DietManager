@@ -16,33 +16,33 @@ require_relative 'Log.rb'
 require_relative 'MyDate.rb'
 
   # Initialize the Food Database and Recipe Database. They both utilize the same class
-  foodDatabase = FoodDB.new
-  recipeDatabase = FoodDB.new
+  food_database = FoodDB.new
+  recipe_database = FoodDB.new
 
   # Initialize the Log database
-  foodLog = Log.new
+  food_log = Log.new
 
   # Trims 'amount' of characters from the beginning of the string
-  def trimFromBeginning(string, amount)
+  def trim_from_beginning(string, amount)
     string[0..(amount - 1)] = ''
-    return string
+    string
   end
 
   # Capitalizes all words in a string
-  def capAll(string)
-    return string.gsub(/\w+/, &:capitalize)
+  def cap_all(string)
+    string.gsub(/\w+/, &:capitalize)
   end
 
   # Returns true if the string contains characters
   def stringNotEmpty(string)
-    return string != ''
+    string != ''
   end
 
   # Returns a Date object with the current date
   def getCurrentDate
     time = Time.now
     currentDate = MyDate.new(time.month, time.day, time.year)
-    return currentDate
+    currentDate
   end
 
   # Saves all three databases to their respective files.
@@ -53,13 +53,13 @@ require_relative 'MyDate.rb'
     logDBfile = File.open('DietLog.txt', 'w')
 
     foodDatabase.database.each_value do |food|
-      food.writeToFile(foodDBfile)
+      food.write_to_file(foodDBfile)
     end
     recipeDatabase.database.each_value do |recipe|
-      recipe.writeToFile(foodDBfile)
+      recipe.write_to_file(foodDBfile)
     end
     logDatabase.database.each_value do |logItem|
-      logItem.writeToFile(logDBfile)
+      logItem.write_to_file(logDBfile)
     end
 
     # Close each database file to save the written values
@@ -81,10 +81,10 @@ require_relative 'MyDate.rb'
       2.times {logData.delete_at(0)}
 
       logData.each do |foodName|
-        foodLog.add(date,foodName)
+        food_log.add(date,foodName)
       end
     else
-      foodLog.add(date, logData[1])
+      food_log.add(date, logData[1])
     end
   end
 
@@ -98,7 +98,7 @@ require_relative 'MyDate.rb'
 
     if foodData[1] == 'b'
       food = BasicFood.new(foodData[0], foodData[2].chomp)
-      foodDatabase.add(food)
+      food_database.add(food)
     elsif foodData[1] == 'r'
       recipeName = foodData[0]
       # Removes the name and 'r' from the food data
@@ -107,7 +107,7 @@ require_relative 'MyDate.rb'
 
       # Add food objects to the foods array
       foodData.each do |foodIterator|
-        food = foodDatabase.get(foodIterator.chomp)
+        food = food_database.get(foodIterator.chomp)
         if food != nil
           foods.push(food)
         end
@@ -116,7 +116,7 @@ require_relative 'MyDate.rb'
       # Create a new recipe from the given values and
       # add it to the recipe database
       recipe = Recipe.new(recipeName, foods)
-      recipeDatabase.add(recipe)
+      recipe_database.add(recipe)
     end
   end
 
@@ -133,14 +133,14 @@ require_relative 'MyDate.rb'
       ################# print all #################
       # Simply calls the printAll function from the food database.
       when input == 'print all'
-        if foodDatabase.notEmpty?
-          foodDatabase.printAll('foods')
+        if food_database.not_empty?
+          food_database.print_all('foods')
           else puts "\nNo foods were found"
         end
 
-        if recipeDatabase.notEmpty?
+        if recipe_database.not_empty?
           puts ''
-          recipeDatabase.printAll('recipes')
+          recipe_database.print_all('recipes')
           else puts "\nNo recipes were found"
         end
 
@@ -148,9 +148,9 @@ require_relative 'MyDate.rb'
       # Checks to make sure the string isn't empty, then calls the
       # find method from the food database.
       when input.start_with?('find')
-        prefix = trimFromBeginning(input, 5)
+        prefix = trim_from_beginning(input, 5)
         if stringNotEmpty(prefix)
-          foodDatabase.find(capAll(prefix))
+          food_database.find(cap_all(prefix))
         else puts "Incorrect format. Try 'find {prefix}'"
         end
 
@@ -158,13 +158,13 @@ require_relative 'MyDate.rb'
       # Prints the given food or recipe using the print method from
       # their respective classes. Checks if the food or recipe exists.
       when input.start_with?('print')
-        name = trimFromBeginning(input, 6)
-        name = capAll(name)
-        if foodDatabase.contains?(name)
-          food = foodDatabase.get(name)
+        name = trim_from_beginning(input, 6)
+        name = cap_all(name)
+        if food_database.contains?(name)
+          food = food_database.get(name)
           food.print
-        elsif recipeDatabase.contains?(name)
-          recipe = recipeDatabase.get(name)
+        elsif recipe_database.contains?(name)
+          recipe = recipe_database.get(name)
           recipe.print
         elsif name == ''
           puts "Incorrect format. Try 'print {recipe|food}'"
@@ -176,14 +176,14 @@ require_relative 'MyDate.rb'
       # object in the food database. Checks to make sure the food doesn't
       # exist and that the arguments are valid.
       when input.start_with?('new food')
-        input = trimFromBeginning(input, 9)
+        input = trim_from_beginning(input, 9)
         if stringNotEmpty(input)
           foodData = input.split(',')
-          foodData[0] = capAll(foodData[0])
+          foodData[0] = cap_all(foodData[0])
 
-          if !foodDatabase.contains?(foodData[0])
+          if !food_database.contains?(foodData[0])
             if foodData.length == 2
-              foodDatabase.add(BasicFood.new(foodData[0], foodData[1]))
+              food_database.add(BasicFood.new(foodData[0], foodData[1]))
               puts "Added #{foodData[0]} to database"
             else puts "Not enough arguments. Try 'new food {name} {calories}'"
             end
@@ -197,27 +197,27 @@ require_relative 'MyDate.rb'
       # object in the recipe database. Checks to make sure the recipe doesn't
       # exist and that the arguments are valid.
       when input.start_with?('new recipe')
-        recipeData = trimFromBeginning(input, 11).split(',')
+        recipeData = trim_from_beginning(input, 11).split(',')
 
         if recipeData.length >= 2
-          recipeName = capAll(recipeData[0])
-          if !recipeDatabase.contains?(recipeName)
+          recipeName = cap_all(recipeData[0])
+          if !recipe_database.contains?(recipeName)
             # Removes first element from array (the recipe name)
             recipeData.shift
 
             # Array of food objects. Will be used to pass into the new recipe constructor if all foods exist
             foodObjects = Array.new
             recipeData.each do |foodIterator|
-              food = capAll(foodIterator)
-              if foodDatabase.contains?(food)
-                foodObjects.push(foodDatabase.get(food))
+              food = cap_all(foodIterator)
+              if food_database.contains?(food)
+                foodObjects.push(food_database.get(food))
               else puts "'#{food}' was not found. Try creating it first with 'new food {name},{calories}'"
               end
             end
 
             # If all of the food names passed in were valid foods, then create the recipe
             if recipeData.length == foodObjects.length
-              recipeDatabase.add(Recipe.new(recipeName, foodObjects))
+              recipe_database.add(Recipe.new(recipeName, foodObjects))
               puts "Added recipe #{recipeName} to database"
             end
           else puts 'That recipe already exists!'
@@ -230,61 +230,61 @@ require_relative 'MyDate.rb'
       # for the specified date, and creates it for the current date if no
       # date is specified.
       when input.start_with?('log')
-        logData = trimFromBeginning(input,4)
-        logData = capAll(logData)
+        logData = trim_from_beginning(input,4)
+        logData = cap_all(logData)
         logDataArray = logData.split(',')
         foodName = logDataArray[0]
 
-        if foodDatabase.does_not_contain?(foodName)
+        if food_database.does_not_contain?(foodName)
           puts "'#{foodName}' was not found. Try creating it first with 'new food {name},{calories}'"
           next
         end
         # If the user typed in a date
         if logDataArray.length > 1
           date = logDataArray[1]
-          foodLog.add(date, foodName)
+          food_log.add(date, foodName)
           puts "Added #{foodName} to the log for #{date}"
           next
         end
 
         # If the user only typed in a food, use current date
-        foodLog.add(getCurrentDate.to_s, foodName)
+        food_log.add(getCurrentDate.to_s, foodName)
         puts "Added #{foodName} to today's log"
 
       ################# delete {food_name},{date} #################
       # Deletes the log of the current food from the specified date.
       when input.start_with?('delete')
-        input = trimFromBeginning(input,7)
-        input = capAll(input)
+        input = trim_from_beginning(input,7)
+        input = cap_all(input)
         data = input.split(',')
 
         # Data[0] is the food name
         # Data[1] is the date
-        foodLog.delete(data[1], data[0])
+        food_log.delete(data[1], data[0])
 
       ################# show #################
       # Show the log for today. Uses the method from the Log class
       # to handle the entire command.
       when input == 'show'
-        foodLog.printLogForToday
+        food_log.print_log_for_today
 
       ################# show all #################
       # Show all logs that are currently in the foodLog. Use the
       # method from the Log class to handle the command.
       when input == 'show all'
-        foodLog.printAllLogs
+        food_log.print_all_logs
 
       ################# show {date} #################
       # Show the log for the specified date. Valid format is MM/DD/YYYY.
       when input.start_with?('show')
-        date = trimFromBeginning(input,5)
-        foodLog.printLogForDate(date)
+        date = trim_from_beginning(input,5)
+        food_log.print_log_for_date(date)
 
       ################# save #################
       # Saves the foodDatabase and recipeDatabase to the FoodDB.txt file.
       # Saves the foodLog to the DietLog.txt
       when input == 'save'
-        saveToFile(foodDatabase,recipeDatabase,foodLog)
+        saveToFile(food_database,recipe_database,food_log)
         puts 'Saved successfully'
 
       ################# commands #################
@@ -307,7 +307,7 @@ require_relative 'MyDate.rb'
       ################# quit #################
       # Calls the save method, then exits the program.
       when input == 'quit'
-        saveToFile(foodDatabase,recipeDatabase,foodLog)
+        saveToFile(food_database,recipe_database,food_log)
         puts 'Saving and quitting...thanks for playing!'
         exit
       else puts 'Invalid command. Type "commands" for a list of commands'

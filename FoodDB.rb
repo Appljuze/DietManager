@@ -14,7 +14,7 @@
 class FoodDB
 
   # Initialize the database hash
-  def initialize()
+  def initialize
     @database = Hash.new
   end
 
@@ -39,7 +39,7 @@ class FoodDB
   end
 
   # Returns true if the database is not empty. Redundant, but useful for readability
-  def notEmpty?
+  def not_empty?
     !@database.empty?
   end
 
@@ -56,8 +56,8 @@ class FoodDB
   # Prints all foods currently in the database.
   # Specify either 'recipe' or 'food' when calling the method
   # This is so we don't need two separate methods for this same function.
-  def printAll(recipeOrFood)
-    puts "Current #{recipeOrFood} in the database:\n"
+  def print_all(recipe_or_food)
+    puts "Current #{recipe_or_food} in the database:\n"
     @database.each_value do |food|
       food.print
     end

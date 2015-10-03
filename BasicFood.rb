@@ -31,12 +31,12 @@ class BasicFood
   end
 
   # Prints with indentation. Used for printing a recipe
-  def recipePrint
+  def recipe_print
     puts "   | #{name} : #{calories} calories"
   end
 
   # Writes the object to FoodDB.txt. Does NOT close the file
-  def writeToFile(file)
+  def write_to_file(file)
     file.write("#{name},b,#{calories}\n")
   end
 
